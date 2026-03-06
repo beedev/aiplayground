@@ -192,7 +192,11 @@ DO:
 - Include total count for pagination metadata
 ```
 
-### Technique 6: Output Format Specification
+### Technique 6: Prompt Caching Awareness
+
+When working with API-based tools (or tools that use APIs under the hood), structuring your prompts with **static content first** (system instructions, tool definitions, few-shot examples) and **variable content last** (the specific user query) can take advantage of prompt caching. This can dramatically reduce latency and cost -- up to 90% cost reduction and 85% latency reduction with Anthropic's prompt caching, for example. Even when using tools like Claude Code or Copilot (which handle caching internally), understanding this principle helps you structure CLAUDE.md files and custom instructions effectively.
+
+### Technique 7: Output Format Specification
 
 When you need structured output, specify the exact format.
 

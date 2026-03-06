@@ -45,7 +45,7 @@ Think of it as having a senior developer sitting in your terminal who can read y
 ### Prerequisites
 
 - A terminal (zsh, bash, or similar)
-- An Anthropic API key or Claude Pro/Max subscription
+- A Claude Pro, Max, Teams, Enterprise, or Console (API) account
 - macOS, Linux, or Windows (via WSL)
 
 Note: Node.js is **not** required when installing via Homebrew or direct download. Node.js 18+ is only needed if you choose the npm installation method.
@@ -55,14 +55,17 @@ Note: Node.js is **not** required when installing via Homebrew or direct downloa
 There are several ways to install Claude Code:
 
 ```bash
-# Preferred method on macOS: Homebrew
-brew install claude-code
+# Recommended method on macOS/Linux: Native installer (auto-updates, no Node.js needed)
+curl -fsSL https://claude.ai/install.sh | bash
+
+# Alternative: Homebrew (macOS/Linux, does NOT auto-update)
+brew install --cask claude-code
 
 # Alternative: npm (requires Node.js 18+)
 npm install -g @anthropic-ai/claude-code
 
-# You can also download directly from:
-# https://claude.ai/download
+# Windows:
+# irm https://claude.ai/install.ps1 | iex
 ```
 
 Claude Code can also be launched directly from [claude.ai](https://claude.ai) with a Claude Pro or Max subscription, and it is available as a **VS Code extension** -- search for "Claude Code" in the VS Code Extensions marketplace to use it as an IDE-integrated agent alongside the CLI.
@@ -97,20 +100,23 @@ claude config list
 # Set a preference
 claude config set --global preferredNotifChannel terminal
 
-# Set the model to use
+# Set the model to use (check available model IDs -- they change with new releases)
 claude config set --global model claude-sonnet-4-20250514
 ```
 
 ### Models
 
-Claude Code uses **Claude Sonnet 4** by default, which provides a strong balance of speed and capability for everyday coding tasks. For complex tasks requiring deeper reasoning (architectural analysis, difficult debugging, large refactors), you can switch to **Claude Opus 4** using the `--model` flag or the `/model` slash command within a session:
+Claude Code uses **Claude Sonnet 4** by default (currently at version 4.6), which provides a strong balance of speed and capability for everyday coding tasks. For complex tasks requiring deeper reasoning (architectural analysis, difficult debugging, large refactors), you can switch to **Claude Opus 4** (currently at version 4.6) using the `--model` flag or the `/model` slash command within a session:
 
 ```bash
 # Start Claude Code with Opus for a complex task
 claude --model claude-opus-4-20250514
 
 # Or switch models during a session using the /model command
+# Check current available model IDs with: claude model list
 ```
+
+Note: Model version IDs change as Anthropic releases updates. The IDs shown above are examples -- use `/model` within a session to see currently available models.
 
 ---
 

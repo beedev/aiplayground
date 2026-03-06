@@ -40,7 +40,7 @@ You Type Code/Comments
 ```
 
 Key architectural details:
-- **Model:** Copilot supports multiple models that users can choose in settings, including GPT-4o (default), Claude Sonnet, and Gemini. Originally powered exclusively by OpenAI Codex, Copilot is now a multi-model platform
+- **Model:** Copilot supports multiple models that users can choose in settings, including GPT-4o, Claude Sonnet, Gemini, and others. The default is "Auto" mode, which picks the best model for each prompt. Originally powered exclusively by OpenAI Codex, Copilot is now a multi-model platform. Premium models consume "premium requests" from your plan's monthly allowance at varying multiplier rates
 - **Context:** Copilot sends the content of your current file plus snippets from open tabs to generate suggestions
 - **Latency:** Suggestions typically appear within 100-500ms of pausing your typing
 - **Privacy:** Your code is sent to GitHub's servers for processing. Enterprise plans offer additional data controls.
@@ -50,9 +50,10 @@ Key architectural details:
 | Tier | Price | Features |
 |------|-------|----------|
 | **Copilot Free** | Free | Limited completions and chat per month |
-| **Copilot Pro** | Paid (check current pricing) | Unlimited completions, chat, CLI access |
+| **Copilot Pro** | Paid (check current pricing) | Unlimited completions, chat, coding agent access, premium request allowance |
+| **Copilot Pro+** | Paid (check current pricing) | Higher premium request allowance, full access to all models |
 | **Copilot Business** | Paid per user (check current pricing) | Organization management, policy controls |
-| **Copilot Enterprise** | Paid per user (check current pricing) | Codebase-aware chat, fine-tuning, knowledge bases |
+| **Copilot Enterprise** | Paid per user (check current pricing) | Enterprise-grade features, knowledge bases (requires GitHub Enterprise Cloud) |
 
 ---
 
@@ -63,7 +64,7 @@ Key architectural details:
 1. Open VS Code
 2. Go to Extensions (Cmd+Shift+X on Mac, Ctrl+Shift+X on Windows/Linux)
 3. Search for "GitHub Copilot"
-4. Install the **GitHub Copilot** extension (chat is now included in the main extension)
+4. Install the **GitHub Copilot** extension (GitHub is consolidating Copilot and Copilot Chat into a single unified extension -- install whichever is currently listed)
 
 ### Authentication
 
@@ -406,16 +407,16 @@ Agent Mode can be activated in two ways:
 | Iteration | Manual | Automatic (fix-and-retry) |
 | Best for | Writing code line by line | Medium-complexity multi-file tasks |
 
-### Copilot Workspace
+### Copilot Coding Agent
 
-In addition to Agent Mode in VS Code, GitHub offers **Copilot Workspace** -- a browser-based agentic coding environment available at [github.com](https://github.com). Copilot Workspace allows you to:
+In addition to Agent Mode in VS Code, GitHub offers the **Copilot Coding Agent** -- an asynchronous, autonomous agent embedded directly into GitHub (evolved from the earlier "Copilot Workspace" technical preview). The Copilot Coding Agent allows you to:
 
-- Start from a GitHub Issue and have Copilot plan and implement a solution
-- Review a proposed set of changes across multiple files in the browser
-- Iterate on the plan before committing the changes
-- Work entirely in the browser without a local development environment
+- Assign a GitHub Issue to Copilot and receive an AI-generated draft pull request
+- Have Copilot spin up a secure development environment (powered by GitHub Actions), write code, run tests, and fix errors autonomously
+- Review the proposed changes as a standard pull request
+- Trigger it from VS Code or directly from GitHub Issues and Jira (as of March 2026)
 
-Copilot Workspace is particularly useful for triaging issues, prototyping solutions, and making contributions to repositories you do not have cloned locally.
+The Copilot Coding Agent is generally available to all paid Copilot subscribers and is particularly useful for triaging issues, prototyping solutions, and making contributions without needing to clone a repository locally.
 
 ---
 

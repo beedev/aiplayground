@@ -73,7 +73,7 @@ Think of the context window as a shared whiteboard between you and the AI. Every
 | Model | Context Window | Approximate Lines of Code |
 |-------|---------------|--------------------------|
 | GPT-4o | 128K tokens | ~30,000 lines |
-| Claude Sonnet 4 / Opus 4 | 200K tokens | ~50,000 lines |
+| Claude Sonnet 4.6 / Opus 4.6 | 200K tokens (1M in beta) | ~50,000 lines |
 | Gemini 2.5 Pro | 1M+ tokens | ~250,000 lines |
 
 **Practical tip:** Just because a model *can* accept 200K tokens does not mean you should dump your entire codebase into it. Focused, relevant context produces better results than raw volume.
@@ -101,7 +101,7 @@ These tools integrate into your IDE and provide real-time code suggestions as yo
 | **GitHub Copilot** | Multi-model (GPT-4o, Claude Sonnet, Gemini) | VS Code, JetBrains, Neovim, Xcode | Tab completion, chat, Agent Mode |
 | **Amazon Q Developer** | Amazon internal | VS Code, JetBrains | AWS-aware suggestions, agentic capabilities |
 | **Tabnine** | Various / self-hosted | Most IDEs | On-premise option for enterprises |
-| **Supermaven** | Custom model | VS Code, JetBrains | Speed-optimized completions |
+| **Supermaven** | Custom model | VS Code, JetBrains | Speed-optimized completions (note: sunsetting after Cursor acquisition; check current status) |
 
 ### AI-Powered Editors
 
@@ -110,18 +110,18 @@ These are full IDE replacements or IDE forks with AI deeply integrated into the 
 | Tool | Base | Key Feature |
 |------|------|-------------|
 | **Cursor** | VS Code fork | Cmd+K editing, codebase-aware chat, multi-file edits |
-| **Windsurf (Codeium)** | VS Code fork | Cascade agent for multi-step tasks |
+| **Windsurf** | VS Code fork | Cascade agent for multi-step tasks (now owned by Cognition AI) |
 | **Zed** | Custom editor | Built-in AI assistant, collaborative editing |
 
 ### CLI / Agentic Tools
 
-These tools operate from the terminal (or as IDE-integrated agents) and can autonomously read, write, and execute code. Note that some tools in the categories above have also gained agentic capabilities -- notably **GitHub Copilot's Agent Mode** in VS Code, which can edit multiple files and run terminal commands.
+These tools operate from the terminal (or as IDE-integrated agents) and can autonomously read, write, and execute code. Note that some tools in the categories above have also gained agentic capabilities -- notably **GitHub Copilot's Agent Mode** in VS Code, which can edit multiple files, run terminal commands, and support MCP servers. GitHub also offers the **Copilot Coding Agent**, an asynchronous agent that works from GitHub Issues to produce pull requests.
 
 | Tool | Vendor | Key Feature |
 |------|--------|-------------|
 | **Claude Code** | Anthropic | Agentic CLI + VS Code extension, multi-file operations, MCP servers, subagents |
 | **Aider** | Open source | Git-aware, diff-based editing |
-| **OpenAI Codex CLI** | OpenAI | Terminal-based code generation |
+| **OpenAI Codex CLI** | OpenAI | Terminal-based agentic coding agent (Rust-based, supports cloud environments) |
 | **Cline** | Open source | VS Code extension with agentic capabilities |
 
 ### How to Think About This Landscape

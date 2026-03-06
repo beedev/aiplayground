@@ -23,12 +23,12 @@ By the end of this module, you will be able to:
 | **File operations** | Inline: current file only; Agent Mode: multi-file | Creates, edits, deletes any file |
 | **Shell access** | Agent Mode can run terminal commands | Full shell command execution |
 | **Autonomy** | Inline: suggest/accept; Agent Mode: multi-step tasks | Plans and executes complex multi-step tasks |
-| **Agentic capabilities** | Agent Mode (multi-file edits, terminal commands) | Subagents, MCP servers, custom skills, orchestration |
+| **Agentic capabilities** | Agent Mode (multi-file edits, terminal commands, MCP support) | Subagents, MCP servers, custom skills, hooks, orchestration |
 | **Speed** | Sub-second (inline); seconds-minutes (Agent Mode) | 5-60 seconds per operation |
 | **Context window** | ~8K tokens (completion), larger for chat | 200K tokens |
 | **IDE support** | VS Code, JetBrains, Neovim, Xcode | Terminal (any OS) + VS Code extension |
-| **Model** | Multi-model: GPT-4o, Claude Sonnet, Gemini (user choice) | Claude Sonnet 4 (default), Claude Opus 4 (complex tasks) |
-| **Extended capabilities** | GitHub ecosystem integration | MCP server integration, CLAUDE.md project instructions |
+| **Model** | Multi-model: GPT-4o, Claude Sonnet, Gemini, and more (user choice, premium request system) | Claude Sonnet 4.x (default), Claude Opus 4.x (complex tasks) |
+| **Extended capabilities** | GitHub ecosystem integration, Copilot Coding Agent, MCP support | MCP server integration, CLAUDE.md project instructions, subagents |
 | **Learning curve** | Low -- just start typing | Medium -- need to learn conversation style |
 | **Best for** | Inline completions + medium agentic tasks | Complex multi-file operations, deep reasoning, orchestration |
 
@@ -288,9 +288,10 @@ Phase 6: Review (Claude Code)
 | Tier | Monthly Cost | Notes |
 |------|-------------|-------|
 | Free | $0 | Limited completions per month |
-| Pro | Check current pricing | Unlimited completions + chat |
+| Pro | Check current pricing | Unlimited completions, chat, premium request allowance |
+| Pro+ | Check current pricing | Higher premium request allowance, all models |
 | Business | Check current pricing (per user) | Admin controls, policy management |
-| Enterprise | Check current pricing (per user) | Codebase indexing, knowledge bases |
+| Enterprise | Check current pricing (per user) | Enterprise features, knowledge bases |
 
 ### Claude Code
 
@@ -313,10 +314,12 @@ Phase 6: Review (Claude Code)
 /compact
 
 # Use Claude Sonnet (cheaper) for routine tasks
-claude config set --global model claude-sonnet-4-20250514
+# Run `claude model list` to see current model IDs, then:
+claude config set --global model <current-sonnet-model-id>
 
 # Use Claude Opus (more expensive, more capable) for complex reasoning
 # Switch when you need it, not by default
+# Use /model within a session to see available models
 ```
 
 ---
