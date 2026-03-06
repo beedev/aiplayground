@@ -78,12 +78,12 @@ const modules = [
 
 async function main() {
   // Create admin user
-  const passwordHash = await bcrypt.hash("ChangeMe123!", 12)
+  const passwordHash = await bcrypt.hash("admin123", 12)
   await prisma.user.upsert({
-    where: { email: "admin@aiplayground.dev" },
+    where: { email: "admin" },
     update: {},
     create: {
-      email: "admin@aiplayground.dev",
+      email: "admin",
       name: "Admin",
       passwordHash,
       role: "ADMIN",
