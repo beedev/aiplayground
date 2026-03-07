@@ -1,5 +1,7 @@
 # GitHub Copilot Essentials
 
+> **Official Documentation:** [GitHub Copilot Docs](https://docs.github.com/en/copilot) -- GitHub's official documentation contains the most up-to-date information on features, pricing, and configuration. Refer to it for the latest changes.
+
 ## Learning Objectives
 
 By the end of this module, you will be able to:
@@ -9,6 +11,9 @@ By the end of this module, you will be able to:
 - Use tab completion effectively to accelerate your coding flow
 - Write comments and code patterns that produce better Copilot suggestions
 - Leverage Copilot Chat for explanations, test generation, and debugging
+- Use Agent Mode for autonomous multi-file editing and task execution
+- Assign issues to Copilot's Coding Agent for asynchronous pull request generation
+- Use Copilot CLI as a terminal-native AI coding assistant
 - Apply best practices that maximize Copilot's usefulness while avoiding common traps
 
 ---
@@ -363,60 +368,522 @@ async function fetchUserData(userId: string): Promise<User> {
 
 ---
 
-## Copilot Agent Mode
+## Copilot Agent Mode: Deep Dive
 
-Copilot now includes a powerful **Agent Mode** that goes far beyond inline completions. Agent Mode transforms Copilot from a suggestion tool into an autonomous coding agent within VS Code.
+Agent Mode is Copilot's most powerful IDE capability. It transforms Copilot from a suggestion tool into an autonomous coding agent that can plan, execute, and iterate on complex tasks -- all within VS Code.
 
 ### What Agent Mode Can Do
 
 - **Autonomously edit multiple files** across your project in a single operation
-- **Run terminal commands** (install dependencies, run tests, execute build scripts)
-- **Iterate on tasks** -- if a test fails, Agent Mode can read the error, fix the code, and re-run the test
-- **Plan and execute multi-step workflows** similar to CLI-based agentic tools like Claude Code, but within the VS Code IDE
+- **Run terminal commands** -- install dependencies, run tests, execute build scripts, start servers
+- **Iterate on failures** -- if a test fails, Agent Mode reads the error, fixes the code, and re-runs the test automatically
+- **Plan and execute multi-step workflows** with reasoning about dependencies between changes
+- **Use MCP tools** -- connect to external services via Model Context Protocol servers (databases, APIs, design tools)
+- **Install extensions** -- Agent Mode can suggest and use VS Code extensions as tools during execution
 
 ### Activating Agent Mode
 
-Agent Mode can be activated in two ways:
+1. Open Copilot Chat panel in VS Code
+2. At the top of the chat view, find the mode dropdown
+3. Select **"Agent"** (instead of "Ask" or "Edit")
+4. Type your task description and press Enter
 
-1. **Switch to Agent mode** in the Copilot Chat panel -- look for the mode dropdown at the top of the chat view and select "Agent"
-2. **Use the `@workspace` agent** in Copilot Chat to ask questions or make changes across your entire workspace
+Agent Mode is also available when you use `Cmd+I` (inline chat) -- look for the Agent toggle.
 
-### Example Agent Mode Workflow
+### How Agent Mode Thinks
+
+Agent Mode follows a structured approach:
 
 ```
-# In Copilot Chat (Agent Mode):
-"Add input validation to all Express route handlers in src/routes/.
- Use Zod schemas and return 400 responses with descriptive error messages.
- Run the tests after making changes."
-
-# Agent Mode will:
-# 1. Scan all route files in src/routes/
-# 2. Create or update Zod schemas
-# 3. Edit each route handler to add validation
-# 4. Run npm test
-# 5. Fix any failing tests
+1. UNDERSTAND -- Parses your request and identifies what needs to change
+2. PLAN -- Creates an internal plan of files to modify and commands to run
+3. EXECUTE -- Makes changes across files, runs commands
+4. VALIDATE -- Checks results (test output, build errors, linter warnings)
+5. ITERATE -- If something fails, analyzes the error and tries again
 ```
+
+This loop continues until the task succeeds or Agent Mode determines it needs your input.
+
+### Example Workflows
+
+**Adding a feature across multiple files:**
+```
+"Add a rate limiter middleware to the Express app. Use express-rate-limit,
+configure it to allow 100 requests per 15 minutes per IP, and apply it
+to all API routes. Add tests for the rate limiting behavior."
+
+Agent Mode will:
+1. Install express-rate-limit via npm
+2. Create the middleware file
+3. Import and apply it in the Express app
+4. Write integration tests
+5. Run tests to verify
+```
+
+**Debugging a complex issue:**
+```
+"The /api/users endpoint returns 500 when the database has users with
+null email addresses. Find the root cause and fix it. Run the tests
+to make sure nothing else breaks."
+
+Agent Mode will:
+1. Read the route handler and related service code
+2. Identify the null check issue
+3. Fix the code with proper null handling
+4. Run the test suite
+5. Fix any cascading test failures
+```
+
+**Refactoring with confidence:**
+```
+"Migrate all class components in src/components/ to functional components
+with hooks. Preserve all existing behavior and make sure tests still pass."
+
+Agent Mode will:
+1. Scan all class components
+2. Convert each one to functional equivalent
+3. Replace lifecycle methods with useEffect
+4. Replace this.state with useState
+5. Run tests after each conversion
+```
+
+### MCP (Model Context Protocol) in Agent Mode
+
+Agent Mode supports MCP servers, which let it connect to external tools and services:
+
+```json
+// .vscode/mcp.json -- configure MCP servers for your project
+{
+  "servers": {
+    "database": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres", "postgresql://localhost/mydb"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem", "./docs"]
+    }
+  }
+}
+```
+
+With MCP servers configured, Agent Mode can:
+- Query your database schema to generate accurate models
+- Read design files to implement pixel-perfect UI
+- Access external APIs for real-time data during development
 
 ### Agent Mode vs. Traditional Copilot
 
 | Aspect | Traditional Copilot | Agent Mode |
 |--------|-------------------|------------|
-| Scope | Current file | Multi-file |
-| Autonomy | Suggests completions | Plans and executes |
-| Terminal access | None (read-only via @terminal) | Can run commands |
-| Iteration | Manual | Automatic (fix-and-retry) |
-| Best for | Writing code line by line | Medium-complexity multi-file tasks |
+| **Scope** | Current file, line-by-line | Multi-file, project-wide |
+| **Autonomy** | Suggests completions you accept/reject | Plans, executes, and iterates autonomously |
+| **Terminal** | Read-only (via @terminal) | Full execution -- installs packages, runs tests |
+| **Iteration** | Manual -- you fix errors yourself | Automatic fix-and-retry loops |
+| **MCP Tools** | Not available | Connects to databases, APIs, external services |
+| **Planning** | No planning capability | Creates and follows multi-step execution plans |
+| **Best for** | Writing code line by line | Medium-to-complex multi-file tasks |
+| **Model choice** | Single completion model | Can leverage different models per task |
 
-### Copilot Coding Agent
+### When to Use Agent Mode vs. Tab Completion
 
-In addition to Agent Mode in VS Code, GitHub offers the **Copilot Coding Agent** -- an asynchronous, autonomous agent embedded directly into GitHub (evolved from the earlier "Copilot Workspace" technical preview). The Copilot Coding Agent allows you to:
+**Use Tab Completion when:**
+- Writing code in a single file
+- You know what you want and just need speed
+- The task is straightforward (implementing a function, writing a test)
+- You want fine-grained control over every line
 
-- Assign a GitHub Issue to Copilot and receive an AI-generated draft pull request
-- Have Copilot spin up a secure development environment (powered by GitHub Actions), write code, run tests, and fix errors autonomously
-- Review the proposed changes as a standard pull request
-- Trigger it from VS Code or directly from GitHub Issues and Jira (as of March 2026)
+**Use Agent Mode when:**
+- The task spans multiple files
+- You need terminal commands (install, build, test) as part of the workflow
+- You want Copilot to iterate on failures automatically
+- The task has clear success criteria (tests pass, builds succeed)
+- You are onboarding to a codebase and want AI-guided exploration
 
-The Copilot Coding Agent is generally available to all paid Copilot subscribers and is particularly useful for triaging issues, prototyping solutions, and making contributions without needing to clone a repository locally.
+### Tips for Effective Agent Mode Usage
+
+1. **Be specific about success criteria** -- "Run the test suite and make sure all tests pass" gives Agent Mode a clear validation target
+2. **Start with smaller tasks** -- Build trust by giving Agent Mode manageable tasks before complex refactors
+3. **Review the plan** -- Agent Mode shows you what it intends to do. Review before approving execution
+4. **Use @workspace context** -- Reference specific files or patterns: "Follow the pattern in src/middleware/auth.ts"
+5. **Set boundaries** -- "Only modify files in src/components/, don't touch tests" prevents unintended changes
+
+---
+
+## Copilot Coding Agent: Asynchronous AI Development
+
+The Copilot Coding Agent is a fundamentally different capability from Agent Mode. While Agent Mode works synchronously in your IDE, the Coding Agent operates asynchronously on GitHub's infrastructure -- you assign it work and come back to review a pull request.
+
+### How It Works
+
+```
+1. You assign a GitHub Issue to Copilot (or @mention it)
+        |
+        v
+2. Copilot spins up a secure cloud environment (via GitHub Actions)
+        |
+        v
+3. It reads the issue, explores the codebase, creates a plan
+        |
+        v
+4. It writes code, runs tests, fixes errors -- autonomously
+        |
+        v
+5. It opens a draft Pull Request with all changes
+        |
+        v
+6. You review the PR like any other -- approve, request changes, or close
+```
+
+### Triggering the Coding Agent
+
+**From GitHub Issues:**
+- Open an issue and assign `@copilot` as the assignee
+- Or comment `@copilot` on an existing issue with instructions
+
+**From VS Code:**
+- Use `copilot /delegate "task description"` to offload work to the cloud agent
+- Continue working locally while the agent works in the background
+
+**From Jira / Azure Boards / Linear:**
+- Copilot integrates with external project management tools
+- Assign tasks to Copilot directly from your issue tracker
+
+**From Slack / Microsoft Teams:**
+- Assign tasks to Copilot from chat conversations
+- Context from conversation links and decisions flows into the task
+
+### What the Coding Agent Can Do
+
+- **Implement features** -- from well-described issues to working code with tests
+- **Fix bugs** -- reads error reports, traces root causes, applies fixes
+- **Write tests** -- generates comprehensive test suites for existing code
+- **Refactor code** -- applies patterns, removes duplication, modernizes syntax
+- **Update documentation** -- syncs docs with code changes
+- **Prototype solutions** -- rapidly explore approaches for complex problems
+- **Triage issues** -- analyze bug reports and provide initial assessment
+
+### What It Cannot Do (Yet)
+
+- Access external services or APIs not in the repository
+- Run long-lived servers or interactive processes
+- Make deployment decisions or push to production
+- Access private packages that require special authentication
+- Handle tasks requiring visual inspection (UI testing)
+
+### Security and Oversight
+
+Every action the Coding Agent takes is auditable:
+
+- **Secure environment** -- runs in an isolated GitHub Actions container
+- **Code scanning** -- generated code is analyzed by GitHub's security tools (secret detection, code scanning, supply chain security)
+- **Full transparency** -- every command run and file changed is visible in the PR
+- **Human review required** -- the agent creates draft PRs, never merges directly
+- **Firewall rules** -- enterprise admins can restrict which repositories and actions the agent can access
+
+### Centralized Dashboard
+
+GitHub provides a mission-control dashboard for Coding Agent activity:
+
+- View all active and completed agent tasks across repositories
+- Monitor progress in real-time
+- Steer or cancel agent tasks mid-execution
+- Track premium request consumption and Actions minutes usage
+- Set budget thresholds and spending alerts
+
+### Writing Good Issues for the Coding Agent
+
+The Coding Agent's output quality depends heavily on issue quality:
+
+**Poor issue (vague, no context):**
+```
+Fix the login bug
+```
+
+**Good issue (specific, with context):**
+```markdown
+## Bug: Login fails for users with special characters in password
+
+**Steps to reproduce:**
+1. Create account with password containing `&` or `<`
+2. Try to log in
+3. Get 500 error
+
+**Expected:** Login succeeds
+**Actual:** Server returns 500 Internal Server Error
+
+**Relevant files:**
+- src/auth/login.ts (password handling)
+- src/utils/sanitize.ts (input sanitization)
+
+**Root cause hypothesis:**
+The password is being HTML-escaped before hashing, causing the hash
+comparison to fail. The sanitization in sanitize.ts should not apply
+to password fields.
+
+**Acceptance criteria:**
+- [ ] Users can log in with special characters in passwords
+- [ ] Existing tests still pass
+- [ ] Add new test cases for special character passwords
+```
+
+### Coding Agent vs. Agent Mode
+
+| Aspect | Agent Mode (VS Code) | Coding Agent (GitHub) |
+|--------|---------------------|----------------------|
+| **Where it runs** | Your local machine, in VS Code | GitHub's cloud (Actions runner) |
+| **Interaction** | Synchronous -- you watch and guide | Asynchronous -- assign and review later |
+| **Trigger** | Chat prompt in VS Code | Issue assignment, @mention, /delegate |
+| **Output** | Direct file changes in your editor | Draft Pull Request |
+| **Duration** | Minutes (interactive session) | Minutes to hours (background) |
+| **Best for** | Interactive development, exploration | Well-defined tasks, parallel work |
+| **Review** | Live in editor | Standard PR review workflow |
+| **Billing** | Premium requests only | Premium requests + Actions minutes |
+
+### When to Use the Coding Agent
+
+- **Parallel productivity** -- assign routine tasks while you focus on complex work
+- **Issue triage** -- let Copilot analyze and prototype fixes for bug reports
+- **Documentation updates** -- assign doc sync tasks after feature changes
+- **Test coverage** -- generate comprehensive tests for untested modules
+- **Onboarding PRs** -- let new team members see AI-generated PRs as learning examples
+
+---
+
+## Copilot CLI: Terminal-Native AI Assistant
+
+Copilot CLI brings the full power of AI-assisted development directly to your terminal. It functions as both a chatbot and an autonomous coding partner, capable of planning, editing files, running commands, and even delegating work to cloud agents.
+
+### Installation and Setup
+
+Copilot CLI is available to all paid Copilot subscribers. Install it via GitHub's official distribution:
+
+```bash
+# Check available commands after installation
+copilot -h
+
+# Get help on specific topics
+copilot help config
+copilot help commands
+copilot help permissions
+```
+
+### Core Commands
+
+#### Planning and Exploration
+
+| Command | Purpose |
+|---------|---------|
+| `/plan [task]` | Create a structured implementation plan with checkboxes |
+| `Shift+Tab` | Toggle between normal and plan mode |
+| `Ctrl+y` | View/edit the current plan in your default Markdown editor |
+| `/context` | Visualize token usage breakdown |
+| `/clear` or `/new` | Start a fresh session (use between unrelated tasks) |
+| `/compact` | Manually trigger context compaction |
+| `/help` | Display CLI help |
+| `/usage` | View usage statistics |
+
+#### Model Selection
+
+```bash
+# Switch models during a session
+/model
+
+# Available models:
+# - Claude Opus 4.5 (default) -- most capable, complex architecture and debugging
+# - Claude Sonnet 4.5 -- fast and cost-effective for daily coding
+# - GPT-5.2 Codex -- strong code generation, good for straightforward tasks
+```
+
+| Model | Best For | Trade-off |
+|-------|----------|-----------|
+| **Claude Opus 4.5** | Complex architecture, difficult debugging, nuanced refactoring | Uses more premium requests |
+| **Claude Sonnet 4.5** | Day-to-day coding, routine tasks, quick iterations | Fast, cost-effective |
+| **GPT-5.2 Codex** | Code generation, code review, straightforward work | Good second opinion |
+
+#### Session Management
+
+```bash
+# View current session info
+/session
+
+# List context compaction checkpoints
+/session checkpoints
+
+# View a specific checkpoint
+/session checkpoints 3
+
+# View temporary artifacts
+/session files
+
+# Display the current implementation plan
+/session plan
+```
+
+Sessions persist automatically with intelligent context compaction. Session data is stored at `~/.copilot/session-state/{session-id}/` and includes:
+- `events.jsonl` -- full conversation history
+- `workspace.yaml` -- session metadata
+- `plan.md` -- current implementation plan
+- `checkpoints/` -- context compaction snapshots
+- `files/` -- persistent artifacts
+
+#### Delegation and Parallel Execution
+
+```bash
+# Offload a task to the cloud Coding Agent
+/delegate "Write comprehensive tests for the auth module"
+
+# Break a task into parallel subtasks
+/fleet "Update all API endpoints to use the new error format"
+
+# Conduct a code review
+/review
+```
+
+**When to use `/delegate`:**
+- Tangential tasks that would break your flow
+- Documentation updates
+- Test generation for separate modules
+- Refactoring that does not depend on your current work
+
+**Keep working locally for:**
+- Core feature development
+- Interactive debugging
+- Tasks requiring your real-time judgment
+
+#### Multi-Repository Work
+
+```bash
+# Add access to additional repositories
+/add-dir /path/to/another-repo
+
+# View and manage allowed directories
+/list-dirs
+
+# Or start from a parent directory containing multiple repos
+cd ~/projects && copilot
+```
+
+#### Tool and Permission Management
+
+```bash
+# Clear all previously approved tools
+/reset-allowed-tools
+
+# Pre-configure permissions via CLI flags
+copilot --allow-tool 'shell(git:*)' --deny-tool 'shell(git push)'
+
+# Common permission patterns:
+# shell(git:*)           -- All Git commands
+# shell(npm run:*)       -- All npm scripts
+# shell(npm run test:*)  -- npm test commands only
+# write                  -- File write access
+```
+
+### Configuration: Custom Instructions
+
+Copilot CLI automatically reads custom instructions from these locations (highest to lowest priority):
+
+| Location | Scope |
+|----------|-------|
+| `.github/copilot-instructions.md` | Repository-specific |
+| `.github/instructions/**/*.instructions.md` | Modular repository instructions |
+| `AGENTS.md` | Repository agent behavior |
+| `Copilot.md`, `GEMINI.md`, `CODEX.md` | Repository (alternative names) |
+| `~/.copilot/copilot-instructions.md` | Global (all sessions) |
+
+**Example `.github/copilot-instructions.md`:**
+
+```markdown
+## Build Commands
+- `npm run build` - Build the project
+- `npm run test` - Run all tests
+- `npm run lint:fix` - Fix linting issues
+
+## Code Style
+- Use TypeScript strict mode
+- Prefer functional components over class components
+- Always add JSDoc comments for public APIs
+
+## Workflow
+- Run `npm run lint:fix && npm test` after changes
+- Commit messages follow conventional commits format
+- Create feature branches from `main`
+```
+
+### Practical CLI Workflows
+
+**Codebase onboarding:**
+```
+> How is logging configured in this project?
+> What's the pattern for adding a new API endpoint?
+> Explain the authentication flow
+```
+
+**Plan-first development (recommended for complex tasks):**
+```
+> /plan Add a WebSocket notification system to the Express app
+
+# Review the generated plan (opens in your editor)
+Ctrl+y
+
+# Approve and execute
+> Looks good, implement this plan
+
+# Copilot executes step by step, running tests along the way
+```
+
+**Test-driven development:**
+```
+> Write failing tests for a new calculateTax function that handles
+  US state tax rates, exemptions, and rounding to nearest cent.
+  Do NOT write the implementation yet.
+
+# Review the tests, then:
+> Now implement calculateTax to make all tests pass
+```
+
+**Bug investigation:**
+```
+> The API returns 500 on /api/orders when the cart is empty.
+  Search the codebase and logs to identify the root cause.
+```
+
+**Git operations:**
+```
+> What changes went into version 2.3.0?
+> Create a PR for this branch with detailed description
+> Rebase this branch against main and resolve conflicts
+```
+
+**Migration checklists:**
+```
+> Run the linter and write all errors to migration-checklist.md
+  as a checklist. Then fix each issue one by one, checking them
+  off as you go.
+```
+
+### Copilot CLI vs. Claude Code
+
+Both are terminal-native AI coding assistants with agentic capabilities. Here is how they compare:
+
+| Aspect | Copilot CLI | Claude Code |
+|--------|-------------|-------------|
+| **Provider** | GitHub / Microsoft | Anthropic |
+| **Default model** | Claude Opus 4.5 (multi-model) | Claude Opus 4 (Anthropic models) |
+| **Config file** | `.github/copilot-instructions.md` | `CLAUDE.md` (hierarchical) |
+| **Cloud delegation** | `/delegate` (Coding Agent) | Not available |
+| **Parallel tasks** | `/fleet` command | Sub-agents / worktrees |
+| **MCP support** | Via VS Code MCP config | Native CLI MCP support |
+| **Session management** | Automatic with checkpoints | Resume, headless, one-shot modes |
+| **Billing** | Premium requests + Actions minutes | API usage or subscription |
+| **Best integration** | GitHub ecosystem (Issues, PRs, Actions) | Any codebase, any platform |
+| **Plan mode** | `/plan` with Shift+Tab toggle | `/plan` in CLI |
+
+**When to use which:**
+- Use **Copilot CLI** when your workflow is GitHub-centric (Issues, PRs, Actions) and you want cloud delegation
+- Use **Claude Code** when you want deep codebase understanding, hierarchical project config, and platform independence
+- Use **both** -- they complement each other well for different tasks
 
 ---
 
@@ -495,6 +962,27 @@ Copilot can suggest code with security vulnerabilities:
 
 Always review security-sensitive code with the same rigor you would apply to a PR from an external contributor.
 
+### 9. Use Custom Instructions for Team Consistency
+
+Set up `.github/copilot-instructions.md` in your repository with:
+- Build and test commands
+- Code style conventions
+- Architecture decisions and patterns
+- Required checks before committing
+
+This ensures every team member gets suggestions aligned with your project's standards.
+
+### 10. Choose the Right Copilot Mode for the Task
+
+| Task Type | Recommended Mode |
+|-----------|-----------------|
+| Writing a single function | Tab completion |
+| Understanding unfamiliar code | Copilot Chat (`/explain`) |
+| Quick fix for a type error | Inline Chat (`Cmd+I`) |
+| Multi-file feature implementation | Agent Mode |
+| Well-defined issue, want to work on something else | Coding Agent |
+| Terminal-native development, planning | Copilot CLI |
+
 ---
 
 ## Copilot Limitations
@@ -509,6 +997,8 @@ Understanding limitations helps you use the tool more effectively.
 | No project-level understanding | Treats each file somewhat independently | Use `@workspace` in chat for project questions |
 | Repetitive patterns | May repeat the same incorrect suggestion | Redirect with a few characters or a comment |
 | Language bias | Better at popular languages (JS/TS/Python) | More careful review needed for niche languages |
+| Agent Mode scope | Can over-reach on large refactors | Set clear boundaries in your prompt |
+| Coding Agent latency | Minutes to complete, not instant | Use for background tasks, not urgent fixes |
 
 ---
 
@@ -531,7 +1021,7 @@ Understanding limitations helps you use the tool more effectively.
 
 ### Build a Utility Module with Copilot
 
-**Goal:** Use Copilot's different modes (tab completion, chat, inline chat) to build a complete utility module with tests.
+**Goal:** Use Copilot's different modes (tab completion, chat, Agent Mode, CLI) to build a complete utility module with tests.
 
 **Task:** Create a `dateUtils.ts` module with these functions:
 
@@ -562,9 +1052,21 @@ businessDaysBetween(start: Date, end: Date): number
 
 4. **Use inline chat** (`Cmd+I`) on the `isBusinessDay` function to add holiday support. Type something like: "Add support for US federal holidays (New Year's, MLK Day, Presidents' Day, Memorial Day, Independence Day, Labor Day, Columbus Day, Veterans Day, Thanksgiving, Christmas)."
 
-5. **Compare approaches:**
-   - Which function did Copilot complete most accurately?
-   - Did any function require significant manual correction?
+5. **Try Agent Mode:** Switch to Agent Mode and ask it to "Add timezone support to all date utility functions using the Intl API. Update the tests accordingly." Watch how it edits multiple files and runs tests.
+
+6. **Try Copilot CLI:** Open your terminal and run `copilot`. Ask it to review your dateUtils module: "Review dateUtils.ts for edge cases I might have missed. Check for DST handling, leap year issues, and timezone problems."
+
+7. **Compare approaches:**
+   - Which mode was most efficient for which task?
+   - Did Agent Mode handle the multi-file change cleanly?
    - Were the generated tests comprehensive, or did you need to add edge cases?
 
-**Bonus:** Ask Copilot Chat to explain the most complex function in your module, then verify the explanation is accurate.
+**Bonus:** Assign a GitHub Issue to `@copilot`: "Add a `parseNaturalDate` function to dateUtils.ts that handles inputs like 'next Tuesday', 'last Friday', '3 days from now'." Review the PR it creates.
+
+---
+
+## See Also
+
+- **Module 3: Claude Code Essentials** -- for a deep dive into Claude Code's features and capabilities
+- **Module 4: Copilot vs Claude Code** -- for detailed comparison and when to use which
+- **Module 17: Claude Code Project Setup** -- for configuring AI-assisted development in your projects

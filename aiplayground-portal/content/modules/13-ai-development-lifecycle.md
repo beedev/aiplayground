@@ -802,6 +802,13 @@ You sit between what needs to happen (goals) and getting it done (tools). Read i
 
 ---
 
+## See Also
+
+- [Module 16: HTC AI-Assisted Development POV](/modules/htc-ai-dev-pov) — The strategic POV introducing the 7-phase lifecycle that this module fully operationalizes.
+- [Module 14: AI + Manual Hybrid Workflow](/modules/ai-hybrid-workflow) — Daily workflow patterns that implement lifecycle phases at the sprint level.
+
+---
+
 *This document is the synthesis of the GOTCHA Framework (system structure) and the SuperClaude Bharath Persona (behavioral model). It defines how AI-enabled development operates in this project.*
 
 *Last updated: 2026-02-19*

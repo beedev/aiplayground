@@ -949,4 +949,11 @@ The goal is not to slow down. The goal is to go fast without breaking things.
 
 ---
 
+## See Also
+
+- [Module 16: HTC AI-Assisted Development POV](/modules/htc-ai-dev-pov) — Strategic overview of CI/CD as the final safety net, which this module provides the Git-level implementation for.
+- [Module 14: AI + Manual Hybrid Workflow](/modules/ai-hybrid-workflow) — Workflow patterns that depend on the Git strategies covered here.
+
+---
+
 *Last updated: 2026-02-19*

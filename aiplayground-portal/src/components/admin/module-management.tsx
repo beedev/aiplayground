@@ -12,9 +12,11 @@ import {
   Plus,
   GripVertical,
   FileText,
+  Search,
 } from "lucide-react"
 import { ResourceTable } from "@/components/admin/resource-table"
 import { ModuleForm } from "@/components/admin/module-form"
+import { ModuleScanDialog } from "@/components/admin/module-scan-dialog"
 import { ConfirmDialog } from "@/components/common/confirm-dialog"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
@@ -36,6 +38,7 @@ interface ModuleManagementProps {
 
 export function ModuleManagement({ modules: initialModules }: ModuleManagementProps) {
   const [showCreate, setShowCreate] = useState(false)
+  const [showScan, setShowScan] = useState(false)
   const [editingModule, setEditingModule] = useState<ModuleWithResources | null>(null)
   const [deletingModule, setDeletingModule] = useState<ModuleWithResources | null>(null)
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null)
@@ -109,10 +112,16 @@ export function ModuleManagement({ modules: initialModules }: ModuleManagementPr
             Manage training modules, ordering, and resources.
           </p>
         </div>
-        <Button onClick={() => setShowCreate(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add Module
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowScan(true)}>
+            <Search className="h-4 w-4 mr-2" />
+            Scan for New Files
+          </Button>
+          <Button onClick={() => setShowCreate(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Module
+          </Button>
+        </div>
       </div>
 
       <div className="space-y-3">
@@ -237,6 +246,15 @@ export function ModuleManagement({ modules: initialModules }: ModuleManagementPr
           }}
         />
       )}
+
+      <ModuleScanDialog
+        open={showScan}
+        onOpenChange={setShowScan}
+        onSuccess={() => {
+          setShowScan(false)
+          router.refresh()
+        }}
+      />
 
       <ConfirmDialog
         open={!!deletingModule}

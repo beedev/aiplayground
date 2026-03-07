@@ -853,6 +853,13 @@ The goal isn't to use AI everywhere. The goal is to use AI where it creates the 
 
 ---
 
+## See Also
+
+- [Module 16: HTC AI-Assisted Development POV](/modules/htc-ai-dev-pov) — The strategic framework that this module's best practices operationalize. Start here for the "why" before diving into the "how."
+- [Module 12: AI Boundary Enforcement](/modules/ai-boundary-enforcement) — Enforcement mechanisms that complement the governance practices covered here.
+
+---
+
 *This document is a living guide. Update it as your team learns. Every mistake that isn't documented is a mistake repeated.*
 
 *Last updated: 2026-02-19*

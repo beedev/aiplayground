@@ -916,6 +916,13 @@ Is it performance-critical?    → Manual (profile first, optimize after)
 
 ---
 
+## See Also
+
+- [Module 16: HTC AI-Assisted Development POV](/modules/htc-ai-dev-pov) — Strategic framework for the hybrid AI + human collaboration model detailed here.
+- [Module 13: AI-Enabled Development Lifecycle](/modules/ai-development-lifecycle) — The full lifecycle framework that this workflow implements day-to-day.
+
+---
+
 *The best hybrid teams aren't the ones that use the most AI. They're the ones that know exactly where AI helps and where humans must lead — and they enforce that boundary with process, automation, and discipline.*
 
 *Last updated: 2026-02-19*

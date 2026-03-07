@@ -435,6 +435,24 @@ From pilot to enterprise — a phased adoption roadmap.
 
 ---
 
+## Related Modules
+
+This strategic overview connects to detailed operational modules throughout the curriculum. Use these links to dive deeper into specific topics.
+
+| Topic | Deep Dive | What You'll Find |
+|-------|-----------|-------------------|
+| **Trust Gradient & Governance** | [Module 11: AI-Assisted Dev Best Practices & Governance](/modules/ai-dev-best-practices) | Team-level trust policies, CI/CD gates, and governance frameworks |
+| **Boundary Enforcement** | [Module 12: AI Boundary Enforcement](/modules/ai-boundary-enforcement) | Complete 7-layer enforcement model for multi-team environments |
+| **Development Lifecycle** | [Module 13: AI-Enabled Development Lifecycle](/modules/ai-development-lifecycle) | GOTCHA framework, SRC validation, comprehensive lifecycle operations |
+| **Hybrid Workflow** | [Module 14: AI + Manual Hybrid Workflow](/modules/ai-hybrid-workflow) | Daily sprint-level playbook for AI + human collaboration |
+| **Git & CI/CD** | [Module 15: Git Multi-User Playbook](/modules/git-multi-user-playbook) | Branching models, merge queues, and bot governance |
+| **Agentic Workflows** | [Module 6: Agentic Workflows & Orchestration](/modules/agentic-workflows-and-orchestration) | Multi-agent patterns mapping to AI Execution Stack Layers 1-3 |
+| **Prompt Engineering** | [Module 5: Prompt Engineering for Developers](/modules/prompt-engineering-for-developers) | Practical implementation of bounded autonomy principles |
+| **AI-Assisted Testing** | [Module 9: AI-Assisted Testing](/modules/ai-assisted-testing) | Detailed testing strategies for AI-generated code |
+| **Secure Code** | [Module 10: Secure Code Generation](/modules/secure-code-generation) | Security practices supporting governance requirements |
+
+---
+
 ## Exercise
 
 ### Strategic Assessment

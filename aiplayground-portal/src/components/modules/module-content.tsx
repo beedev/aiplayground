@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import rehypeRaw from "rehype-raw"
 import type { Components } from "react-markdown"
+import Link from "next/link"
 
 interface ModuleContentProps {
   content: string
@@ -44,11 +45,20 @@ const components: Components = {
       </h3>
     )
   },
-  a: ({ href, children, ...props }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
-      {children}
-    </a>
-  ),
+  a: ({ href, children, ...props }) => {
+    if (href && href.startsWith("/modules/")) {
+      return (
+        <Link href={href} {...props}>
+          {children}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+        {children}
+      </a>
+    )
+  },
   table: ({ children, ...props }) => (
     <div className="overflow-x-auto my-4">
       <table {...props}>{children}</table>

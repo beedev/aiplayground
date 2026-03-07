@@ -1030,6 +1030,13 @@ Emergency → Hotfix branch → Senior approval → Post-incident review
 
 ---
 
+## See Also
+
+- [Module 16: HTC AI-Assisted Development POV](/modules/htc-ai-dev-pov) — Strategic overview of the boundary model that this module details at the implementation level.
+- [Module 11: AI-Assisted Dev Best Practices & Governance](/modules/ai-dev-best-practices) — Governance practices that complement boundary enforcement.
+
+---
+
 *Boundaries are not bureaucracy. They're how teams move fast without breaking each other's work. Enforce them in code, not just in meetings.*
 
 *Last updated: 2026-02-19*

@@ -1,5 +1,7 @@
 # Copilot vs. Claude Code: When to Use What
 
+> **Further Reading:** [GitHub Copilot vs Claude Code: Accuracy & Speed (2026)](https://www.sitepoint.com/github-copilot-vs-claude-code-accuracy-speed-2026/) -- SitePoint's detailed benchmark comparison of both tools in real-world scenarios.
+
 ## Learning Objectives
 
 By the end of this module, you will be able to:
@@ -9,6 +11,7 @@ By the end of this module, you will be able to:
 - Develop a workflow that uses both tools together effectively
 - Make informed decisions about tool selection based on task characteristics
 - Understand the cost implications of each tool
+- Evaluate accuracy and speed trade-offs in real-world scenarios
 
 ---
 
@@ -31,6 +34,68 @@ By the end of this module, you will be able to:
 | **Extended capabilities** | GitHub ecosystem integration, Copilot Coding Agent, MCP support | MCP server integration, CLAUDE.md project instructions, subagents |
 | **Learning curve** | Low -- just start typing | Medium -- need to learn conversation style |
 | **Best for** | Inline completions + medium agentic tasks | Complex multi-file operations, deep reasoning, orchestration |
+
+### Agentic Capabilities Comparison
+
+Both tools now offer powerful agentic capabilities, but they differ in architecture and approach:
+
+| Capability | GitHub Copilot | Claude Code |
+|-----------|---------------|-------------|
+| **IDE Agent Mode** | Agent Mode in VS Code -- multi-file edits, terminal commands, MCP tools | VS Code extension with similar capabilities |
+| **Terminal Agent** | Copilot CLI -- full terminal-native agent with `/plan`, `/delegate`, `/fleet` | Native CLI agent with subagents, worktrees, `/plan` |
+| **Cloud/Async Agent** | Coding Agent -- assign issues, get PRs back asynchronously | Not available -- always synchronous |
+| **Planning** | `/plan` with Shift+Tab toggle, visual editor | Plan mode, CLAUDE.md-driven conventions |
+| **Delegation** | `/delegate` to cloud, `/fleet` for parallel subtasks | Subagents for parallel work, worktrees for isolation |
+| **MCP Support** | Via `.vscode/mcp.json` and VS Code settings | Native CLI MCP support, plugins via settings UI |
+| **Custom Instructions** | `.github/copilot-instructions.md`, `AGENTS.md` | `CLAUDE.md` (hierarchical: user > project > directory) |
+| **Multi-repo** | `/add-dir` in CLI, parent directory mode | Working directory + additional directories |
+| **Session Persistence** | Automatic checkpoints, session resume | Memory files, session resume, headless mode |
+| **External Integrations** | GitHub Issues, Jira, Azure Boards, Slack, Teams | Git operations, shell commands |
+| **Security Scanning** | Built-in (GitHub code scanning on generated PRs) | Manual review + external tools |
+| **Model Selection** | Multi-model (Claude Opus 4.5, Sonnet 4.5, GPT-5.2 Codex) | Anthropic models (Opus 4, Sonnet 4) |
+
+---
+
+## Accuracy and Speed: Real-World Assessment
+
+Understanding how these tools perform in practice helps you set realistic expectations and choose the right tool.
+
+### Code Generation Accuracy
+
+| Scenario | Copilot (Inline) | Copilot (Agent Mode) | Claude Code |
+|----------|-----------------|---------------------|-------------|
+| **Single function implementation** | Excellent -- fast, often correct on first try | Good -- slightly over-engineered | Good -- accurate but slower |
+| **Multi-file refactoring** | N/A (inline only) | Good for 3-5 files | Excellent for 10+ files |
+| **Complex algorithm** | Hit-or-miss -- may need multiple attempts | Better with model selection | Strong -- deep reasoning |
+| **Framework-specific patterns** | Strong for popular frameworks | Strong with MCP/docs context | Strong with MCP (Context7) |
+| **Security-sensitive code** | Requires careful review | Better with guardrails | Better reasoning about edge cases |
+| **Test generation** | Good happy-path coverage | Good with iteration loop | Comprehensive edge case coverage |
+| **API integration** | Good for common APIs | Good with docs context | Strong with full codebase awareness |
+
+### Speed Comparison
+
+| Task Type | Copilot (Inline) | Copilot (Agent Mode) | Claude Code |
+|-----------|-----------------|---------------------|-------------|
+| **Single function** | ~2-5 seconds | ~15-30 seconds | ~15-45 seconds |
+| **Multi-file feature (3-5 files)** | N/A | ~2-5 minutes | ~3-8 minutes |
+| **Large refactor (10+ files)** | Manual (30+ min) | ~5-15 minutes | ~5-15 minutes |
+| **Bug investigation** | Manual | ~3-10 minutes | ~2-8 minutes |
+| **Project scaffolding** | Manual | ~5-10 minutes | ~3-10 minutes |
+| **Async task (Coding Agent)** | ~5-30 minutes (background) | N/A | N/A |
+
+### Key Accuracy Insights
+
+1. **Copilot inline is fastest but narrowest** -- it excels when the task fits within a single file and follows established patterns. Accuracy drops when the task requires cross-file awareness.
+
+2. **Agent Mode closes the gap** -- Copilot's Agent Mode brings it much closer to Claude Code for medium-complexity tasks. The main difference is in the depth of reasoning and context window size.
+
+3. **Claude Code wins on complex reasoning** -- for tasks requiring understanding of system architecture, tracing data flow across many files, or making nuanced trade-off decisions, Claude Code's larger context window and deeper reasoning produce more accurate results.
+
+4. **Both tools benefit from good prompts** -- vague instructions produce mediocre results from both tools. Specific, constrained prompts with clear success criteria dramatically improve accuracy.
+
+5. **Model selection matters** -- Copilot users can now choose between Claude, GPT, and Gemini models. Claude Opus 4.5 in Copilot CLI produces different results than Claude Sonnet 4 in Claude Code. Experiment with model selection for your specific use case.
+
+6. **Iteration is where agents shine** -- both Agent Mode and Claude Code can run tests, detect failures, and fix them automatically. This iterative loop often produces better final results than a single-shot code generation, regardless of which tool you use.
 
 ---
 
@@ -279,6 +344,29 @@ Phase 6: Review (Claude Code)
 
 4. **Use Claude Code for tests, Copilot for assertions.** Claude Code can generate comprehensive test structures. You can refine individual assertions with Copilot's tab completion.
 
+5. **Use Copilot Coding Agent for background work.** Assign routine tasks (test generation, doc updates, issue triage) to the Coding Agent while you focus on complex work with Claude Code. Review the PRs later.
+
+6. **Use Copilot CLI and Claude Code side-by-side.** Open two terminal tabs -- one running Copilot CLI, one running Claude Code. Use Copilot CLI for GitHub-integrated tasks (PR creation, issue analysis) and Claude Code for deep codebase operations. They complement each other.
+
+7. **Match the tool to the git workflow.** Use Copilot's Coding Agent for issue-to-PR automation in GitHub-centric workflows. Use Claude Code for branch-based development with complex multi-file changes that need human review before committing.
+
+### CLI Showdown: Copilot CLI vs. Claude Code
+
+Both tools now offer terminal-native agentic experiences. Here is when to choose which:
+
+| Scenario | Better Choice | Why |
+|----------|--------------|-----|
+| Working on a GitHub-hosted project | Copilot CLI | Native Issues/PRs integration, `/delegate` to Coding Agent |
+| Working on a non-GitHub project | Claude Code | Platform-independent, no GitHub dependency |
+| Need to delegate work asynchronously | Copilot CLI | `/delegate` sends tasks to cloud agent |
+| Need deep codebase refactoring | Claude Code | 200K context, hierarchical CLAUDE.md conventions |
+| Want to parallelize subtasks | Either | Copilot: `/fleet`, Claude Code: subagents |
+| Need MCP tool integrations | Either | Both support MCP servers |
+| Team has existing `.github/` conventions | Copilot CLI | Reads `copilot-instructions.md` and `AGENTS.md` |
+| Team has existing `CLAUDE.md` conventions | Claude Code | Hierarchical project instructions |
+| Need multiple model choices | Copilot CLI | Claude Opus 4.5, Sonnet 4.5, GPT-5.2 Codex |
+| Prefer Anthropic models specifically | Claude Code | Native Claude model support, latest versions |
+
 ---
 
 ## Cost Comparison
@@ -391,25 +479,40 @@ When you face a development task, ask these questions:
 - Add input validation
 - Add unit tests
 
-**Round 1: Copilot Only (30 minutes)**
+**Round 1: Copilot Inline + Chat Only (30 minutes)**
 1. Work entirely in VS Code using Copilot tab completion and Copilot Chat
 2. Create each file manually, using Copilot to generate the code
 3. Track: How many files did you create? How long did each take? Where did Copilot struggle?
 
-**Round 2: Claude Code Only (30 minutes)**
+**Round 2: Copilot Agent Mode (20 minutes)**
+1. Start fresh. Switch to Agent Mode in Copilot Chat
+2. Describe the full feature and let Agent Mode implement it
+3. Track: Did it handle multi-file creation? How many iterations to get tests passing?
+
+**Round 3: Claude Code Only (20 minutes)**
 1. Work entirely in the terminal with Claude Code
 2. Describe the feature and let Claude Code implement it
 3. Track: How many interactions did it take? What did Claude Code get right/wrong?
 
-**Round 3: Compare**
+**Round 4: Compare All Three**
 - Time to completion for each approach
 - Code quality differences (structure, naming, error handling)
 - Test coverage differences
 - Where each tool was faster or better
 - Which approach produced more maintainable code?
+- How did Agent Mode compare to Claude Code for this medium-complexity task?
 
 **Reflection Questions:**
-1. For which parts of the task was Copilot clearly faster?
-2. For which parts was Claude Code clearly faster?
+1. For which parts of the task was Copilot inline clearly fastest?
+2. How did Copilot Agent Mode compare to Claude Code for multi-file work?
 3. If you could only use one tool, which would you pick for this task? Why?
 4. How would you combine both tools for the optimal workflow?
+5. Would the Coding Agent (async) be appropriate for this task? When would you use it instead?
+
+---
+
+## See Also
+
+- **Module 2: GitHub Copilot Essentials** -- deep dive into Copilot features including Agent Mode, Coding Agent, and Copilot CLI
+- **Module 3: Claude Code Essentials** -- comprehensive coverage of Claude Code features, agents, memory, and session management
+- **Module 17: Claude Code Project Setup** -- setting up CLAUDE.md, hooks, permissions, and MCP plugins for your projects

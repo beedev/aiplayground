@@ -14,6 +14,7 @@ import {
   Menu,
   FolderOpen,
   Settings,
+  Trophy,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -33,6 +34,7 @@ const mainNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/modules", label: "Modules", icon: BookOpen },
   { href: "/forum", label: "Forum", icon: MessageSquare },
+  { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
 ]
 
 const adminNavItems = [
@@ -41,6 +43,7 @@ const adminNavItems = [
   { href: "/admin/modules", label: "Module Resources", icon: FolderOpen },
   { href: "/admin/forum", label: "Forum Moderation", icon: Settings },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/admin/leaderboard", label: "Leaderboard", icon: Trophy },
 ]
 
 function NavContent({ userRole, pathname }: { userRole: string; pathname: string }) {
