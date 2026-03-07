@@ -1,9 +1,18 @@
 import { auth } from "@/lib/auth"
+import { stripBasePath } from "@/lib/paths"
 import { NextResponse } from "next/server"
 
 export default auth((req) => {
-  const { pathname } = req.nextUrl
+  const pathname = stripBasePath(req.nextUrl.pathname)
   const isLoggedIn = !!req.auth
+
+  if (
+    pathname.startsWith("/_next/") ||
+    pathname === "/favicon.ico" ||
+    pathname.startsWith("/images")
+  ) {
+    return NextResponse.next()
+  }
 
   // Public routes
   if (pathname === "/login" || pathname.startsWith("/api/auth")) {

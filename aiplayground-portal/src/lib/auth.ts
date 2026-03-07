@@ -2,8 +2,10 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "./prisma"
+import { withBasePath } from "./paths"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  basePath: "/api/auth",
   providers: [
     Credentials({
       name: "credentials",
@@ -37,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   session: { strategy: "jwt" },
-  pages: { signIn: "/login" },
+  pages: { signIn: withBasePath("/login") },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

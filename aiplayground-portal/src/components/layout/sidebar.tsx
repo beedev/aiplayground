@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { stripBasePath } from "@/lib/paths"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -109,7 +110,7 @@ function NavContent({ userRole, pathname }: { userRole: string; pathname: string
 }
 
 export function Sidebar({ userRole }: SidebarProps) {
-  const pathname = usePathname()
+  const pathname = stripBasePath(usePathname())
   const [open, setOpen] = useState(false)
 
   return (

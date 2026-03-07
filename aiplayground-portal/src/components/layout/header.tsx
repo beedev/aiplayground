@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
+import { stripBasePath, withBasePath } from "@/lib/paths"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,7 +45,7 @@ function getInitials(name: string): string {
 }
 
 export function Header({ userName, userEmail, userRole }: HeaderProps) {
-  const pathname = usePathname()
+  const pathname = stripBasePath(usePathname())
   const title = getPageTitle(pathname)
 
   return (
@@ -79,7 +80,7 @@ export function Header({ userName, userEmail, userRole }: HeaderProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() => signOut({ callbackUrl: withBasePath("/login") })}
               className="cursor-pointer text-red-600 focus:text-red-600"
             >
               <LogOut className="mr-2 h-4 w-4" />
