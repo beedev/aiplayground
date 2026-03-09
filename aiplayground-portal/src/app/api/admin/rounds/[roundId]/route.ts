@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { updateRoundSchema } from "@/lib/validations/leaderboard"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(
   _request: Request,
   { params }: { params: { roundId: string } }

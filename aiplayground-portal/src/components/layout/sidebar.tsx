@@ -110,7 +110,7 @@ function NavContent({ userRole, pathname }: { userRole: string; pathname: string
 }
 
 export function Sidebar({ userRole }: SidebarProps) {
-  const pathname = stripBasePath(usePathname())
+  const pathname = stripBasePath(usePathname() ?? "/")
   const [open, setOpen] = useState(false)
 
   return (

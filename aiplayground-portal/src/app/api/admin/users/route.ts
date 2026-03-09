@@ -4,6 +4,8 @@ import { NextResponse } from "next/server"
 import { createUserSchema } from "@/lib/validations/user"
 import bcrypt from "bcryptjs"
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
   try {
     const session = await auth()

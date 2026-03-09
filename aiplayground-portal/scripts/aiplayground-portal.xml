@@ -1,0 +1,27 @@
+﻿<service>
+  <id>aiplayground-portal</id>
+  <name>AI Playground Portal</name>
+  <description>Next.js AI Playground on port 5013</description>
+  <executable>D:\soft\node-v24.14.0-win-x64\node.exe</executable>
+  <arguments>"D:\aiplayground\aiplayground-portal\node_modules\next\dist\bin\next" start -p 5013 -H 0.0.0.0</arguments>
+  <workingdirectory>D:\aiplayground\aiplayground-portal</workingdirectory>
+  <logpath>D:\aiplayground\aiplayground-portal\logs</logpath>
+  <log mode="roll-by-size">
+    <sizeThreshold>10240</sizeThreshold>
+    <keepFiles>8</keepFiles>
+  </log>
+  <onfailure action="restart" delay="5 sec"/>
+  <onfailure action="restart" delay="5 sec"/>
+  <onfailure action="restart" delay="5 sec"/>
+  <startmode>Automatic</startmode>
+  <env name="POSTGRES_HOST" value="localhost"/>
+  <env name="POSTGRES_PORT" value="5432"/>
+  <env name="POSTGRES_DB" value="aiplayground"/>
+  <env name="POSTGRES_USER" value="aiplayground"/>
+  <env name="POSTGRES_PASSWORD" value="aiplayground"/>
+  <env name="DATABASE_URL" value="postgresql://aiplayground:aiplayground@localhost:5432/aiplayground"/>
+  <env name="NEXTAUTH_URL" value="https://idea.htcindia.com/aiplayground"/>
+  <env name="NEXTAUTH_SECRET" value="local-dev-secret-change-me"/>
+  <env name="PORT" value="5013"/>
+  <env name="NEXT_PUBLIC_BASE_PATH" value="/aiplayground"/>
+</service>

@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { updatePollSchema } from "@/lib/validations/leaderboard"
 
+export const dynamic = 'force-dynamic'
+
 export async function PUT(
   request: Request,
   { params }: { params: { pollId: string } }

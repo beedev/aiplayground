@@ -1,0 +1,74 @@
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/providers. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38411
+    at async e_.execute (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:27880)
+    at async e_.handle (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:39943)
+    at async doRender (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1588:28)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/error. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38411
+    at async e_.execute (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:27880)
+    at async e_.handle (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:39943)
+    at async doRender (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1588:28)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/error. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38411
+    at async e_.execute (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:27880)
+    at async e_.handle (D:\aiplayground\aiplayground-portal\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:39943)
+    at async doRender (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (D:\aiplayground\aiplayground-portal\node_modules\next\dist\server\base-server.js:1588:28)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:5013/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: https://idea.htcindia.com/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: https://idea.htcindia.com/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: https://idea.htcindia.com/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:54005
+    at a1 (D:\aiplayground\aiplayground-portal\.next\server\chunks\8877.js:415:56680)
+[33m[auth][warn][env-url-basepath-mismatch][0m Read more: https://warnings.authjs.dev
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: https://idea.htcindia.com/api/auth/session. Read more at https://errors.authjs.dev#untrustedhost
+    at D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:54060
+    at sm (D:\aiplayground\aiplayground-portal\.next\server\middleware.js:416:56760)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)

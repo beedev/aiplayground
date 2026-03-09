@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { updateTeamSchema } from "@/lib/validations/leaderboard"
 
+export const dynamic = 'force-dynamic'
+
 export async function PUT(
   request: Request,
   { params }: { params: { teamId: string } }

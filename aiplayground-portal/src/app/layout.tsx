@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: "Learn AI/ML concepts through interactive modules",
 }
 
+export const dynamic = 'force-dynamic'
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -45,7 +45,7 @@ function getInitials(name: string): string {
 }
 
 export function Header({ userName, userEmail, userRole }: HeaderProps) {
-  const pathname = stripBasePath(usePathname())
+  const pathname = stripBasePath(usePathname() ?? "/")
   const title = getPageTitle(pathname)
 
   return (

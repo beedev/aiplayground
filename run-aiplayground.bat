@@ -19,7 +19,7 @@ set "POSTGRES_USER=aiplayground"
 set "POSTGRES_PASSWORD=aiplayground"
 set "DATABASE_URL=postgresql://%POSTGRES_USER%:%POSTGRES_PASSWORD%@%POSTGRES_HOST%:%POSTGRES_PORT%/%POSTGRES_DB%"
 set "PORT=5013"
-set "NEXTAUTH_URL=http://localhost:%PORT%/aiplayground"
+set "NEXTAUTH_URL=http://localhost:%PORT%"
 set "NEXT_PUBLIC_BASE_PATH=/aiplayground"
 
 set "ENV_FILE=%APP_DIR%\.env"
