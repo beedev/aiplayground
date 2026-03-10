@@ -30,6 +30,9 @@ export default auth((req) => {
     const allowed =
       pathname.startsWith("/modules") || pathname.startsWith("/api/modules")
     if (!allowed) {
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+      }
       return NextResponse.redirect(new URL("/modules", req.url))
     }
   }
