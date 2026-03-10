@@ -13,12 +13,12 @@ A training portal for teams to learn AI-assisted development — covering Claude
 
 ## Features
 
-- 10 training modules with rich markdown content and hands-on exercises
+- 18 training modules with rich markdown content and hands-on exercises
 - Module progress tracking per user
 - Discussion forum with threads, posts, replies, and upvotes
 - Admin panel: user management, content/resource management, forum moderation
 - Analytics dashboard with completion rates, user progress, and engagement trends
-- Role-based access control (admin / member)
+- Role-based access control (admin / member / guest)
 
 ## Prerequisites
 
@@ -72,9 +72,10 @@ POSTGRES_USER=aiplayground
 POSTGRES_PASSWORD=aiplayground
 DATABASE_URL=postgresql://aiplayground:aiplayground@localhost:5432/aiplayground
 
-NEXTAUTH_URL=http://localhost:5005
+NEXTAUTH_URL=http://localhost:5013/aiplayground
 NEXTAUTH_SECRET=<generate-with: openssl rand -base64 32>
-PORT=5005
+PORT=5013
+NEXT_PUBLIC_BASE_PATH=/aiplayground
 ```
 
 ### 5. Push database schema
@@ -85,7 +86,7 @@ npx prisma db push
 
 ### 6. Seed the database
 
-This creates the admin user and all 10 training modules:
+This creates the admin user and all 18 training modules:
 
 ```bash
 npm run db:seed
@@ -97,13 +98,13 @@ npm run db:seed
 npm run dev
 ```
 
-Open **http://localhost:5005** in your browser.
+Open **http://localhost:5013/aiplayground** in your browser.
 
 ## Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start dev server on port 5005 |
+| `npm run dev` | Start dev server on port 5013 |
 | `npm run build` | Production build |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
@@ -115,9 +116,9 @@ Open **http://localhost:5005** in your browser.
 
 ```
 aiplayground-portal/
-├── content/modules/          # 10 training MD files
+├── content/modules/          # 18 training MD files
 ├── prisma/
-│   ├── schema.prisma         # Database schema (7 models)
+│   ├── schema.prisma         # Database schema (12 models)
 │   └── seed.ts               # Seed script
 ├── src/
 │   ├── app/
@@ -152,6 +153,14 @@ aiplayground-portal/
 8. Requirement Traceability & Preventing Hallucination
 9. AI-Assisted Testing
 10. Secure Code Generation
+11. AI-Assisted Dev Best Practices & Governance
+12. AI Boundary Enforcement
+13. AI-Enabled Development Lifecycle
+14. AI + Manual Hybrid Workflow
+15. Git Multi-User Playbook
+16. HTC AI-Assisted Development POV
+17. Setting Up Claude Code for Your Project
+18. Claude Cowork & Agent Teams
 
 ## Adding Content
 

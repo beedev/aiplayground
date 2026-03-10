@@ -81,14 +81,18 @@ export function Header({ userName, userEmail, userRole }: HeaderProps) {
                 </Badge>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => setShowChangePassword(true)}
-              className="cursor-pointer"
-            >
-              <KeyRound className="mr-2 h-4 w-4" />
-              Change Password
-            </DropdownMenuItem>
+            {userRole !== "GUEST" && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setShowChangePassword(true)}
+                  className="cursor-pointer"
+                >
+                  <KeyRound className="mr-2 h-4 w-4" />
+                  Change Password
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => signOut({ callbackUrl: withBasePath("/login") })}
